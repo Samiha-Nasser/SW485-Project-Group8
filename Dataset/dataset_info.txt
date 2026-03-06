@@ -1,1 +1,8 @@
+Kaggle Dataset URL:
+https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
 
+License Information:
+Open Data Commons Database Contents License (DbCL) v1.0
+(Verified on the Kaggle dataset page before submission.)
+
+This dataset contains anonymized credit card transactions made by European cardholders in September 2013. It includes 284,807 transactions that occurred over two days, with 492 identified as fraudulent. The dataset is highly imbalanced, where fraudulent transactions represent only 0.172% of all transactions. Most features are numerical values obtained through PCA transformation (V1–V28), while the features Time and Amount are not transformed. The target variable is Class, where 1 indicates a fraudulent transaction and 0 indicates a legitimate transaction. This dataset is widely used for research and machine learning experiments in credit card fraud detection.
