@@ -11,11 +11,6 @@
 7. Fatimah Alsaqaf - 444200112
 
 ## Project Motivation
-Credit card fraud is a major financial risk for banks and consumers.
-The goal of this project is to detect fraudulent transactions from a very large set of legitimate ones using machine learning.
-The challenge is building a robust model that catches fraud patterns while reducing false alarms for genuine customers.
-
-## Dataset
-- Dataset title: Credit Card Fraud Detection
-- Source: Kaggle
-- URL: https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
+Credit card fraud is a significant real-world problem that causes major financial losses for both banks and customers. Fraudulent transactions are rare compared to legitimate ones, making detection difficult and increasing the risk of missing actual fraud cases.
+We chose to study this problem because it has practical importance and presents an interesting technical challenge for machine learning. It requires handling highly imbalanced data, selecting appropriate evaluation metrics, and designing preprocessing steps to improve fraud detection.
+We selected the Credit Card Fraud Detection dataset from Kaggle because it contains real, structured transaction data and allows us to easily compare the performance of different machine learning models.
