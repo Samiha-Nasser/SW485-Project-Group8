@@ -8,3 +8,7 @@ Open Data Commons Database Contents License (DbCL) v1.0
 This dataset contains anonymized credit card transactions made by European cardholders in September 2013. It includes 284,807 transactions that occurred over two days, 
 with 492 identified as fraudulent. 
 The target variable is Class, where 1 indicates a fraudulent transaction and 0 indicates a legitimate transaction. This dataset is widely used for research and machine learning experiments in credit card fraud detection.
+
+Note:
+The raw dataset is not included in this repository due to GitHub file size limitations.
+Please download it directly from Kaggle using the link above.
