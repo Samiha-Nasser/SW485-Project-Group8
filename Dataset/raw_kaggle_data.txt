@@ -1,0 +1,8 @@
+Dataset: Credit Card Fraud Detection
+
+Source:
+https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
+
+Note:
+The raw dataset is not included in this repository due to GitHub file size limitations.
+Please download it directly from Kaggle using the link above.
