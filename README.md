@@ -6,7 +6,7 @@
 2. Samiha Nasser - 443204635
 3. Ruba Fayez - 444200096
 4. Rana Alkhuraiji - 444200455
-5. Raghad Alyousefi - 444203521
+5. Raghad Alyousfy - 444203521
 6. Aleen Alqasim - 444201194
 7. Fatimah Alsaqaf - 444200112
 
