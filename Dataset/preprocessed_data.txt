@@ -1,8 +1,7 @@
-Dataset: Credit Card Fraud Detection
+Dataset: creditcard_preprocessed.csv
 
 Source:
-
+https://drive.google.com/file/d/1sPUCMV9m_Q2bhl2lS28eUZINSjtRD8Hd/view?usp=drive_link
 
 Note:
-The preprocessed dataset is not included in this repository due to GitHub file size limitations.
-Please download it directly from using the link above.
+Due to file size limitations on GitHub, the dataset is hosted on Google Drive.
