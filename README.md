@@ -10,6 +10,20 @@
 6. Aleen Alqasim - 444201194
 7. Fatimah Alsaqaf - 444200112
 
+## Team Roles and Responsibilities (Phase 1)
+
+The following table shows the roles and responsibilities of team members in Phase 1.
+
+| Name | Role / Task |
+|-----------|----------------|
+| Samiha Nasser | Data Analysis, Preprocessing & Visualization |
+| Raghad Alyousfy | Data Analysis, Preprocessing & Visualization |
+| Rana Alkhuraiji | Data Analysis, Preprocessing & Visualization |
+| Khawlah Alawadi | Algorithm Selection & Implementation |
+| Aleen Alqasem | Algorithm Selection & Implementation |
+| Fatima Alsaggaf | Algorithm Selection & Implementation |
+| Ruba Fayez | Model Comparison & Analysis |
+
 ## Project Motivation
 Credit card fraud is a significant real-world problem that causes major financial losses for both banks and customers. Fraudulent transactions are rare compared to legitimate ones, making detection difficult and increasing the risk of missing actual fraud cases.
 We chose to study this problem because it has practical importance and presents an interesting technical challenge for machine learning. It requires handling highly imbalanced data, selecting appropriate evaluation metrics, and designing preprocessing steps to improve fraud detection.
