@@ -1,1 +1,4 @@
+Transaction: {features}
+Prediction: {prediction}
 
+If fraud is detected, provide clear and actionable steps for the user.
