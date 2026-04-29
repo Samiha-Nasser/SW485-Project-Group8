@@ -1,1 +1,6 @@
+You are a fraud detection expert.
 
+Transaction: {features}
+Prediction: {prediction}
+
+Explain why this transaction is classified as fraud or not.
