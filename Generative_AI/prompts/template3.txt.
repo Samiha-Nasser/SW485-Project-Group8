@@ -1,1 +1,4 @@
+Transaction: {features}
+Prediction: {prediction}
 
+Compare this transaction with normal behavior and explain the differences.
