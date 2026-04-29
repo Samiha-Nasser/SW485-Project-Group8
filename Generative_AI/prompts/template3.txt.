@@ -1,4 +1,4 @@
 Transaction: {features}
 Prediction: {prediction}
 
-Compare this transaction with normal behavior and explain the differences.
+Classify this transaction as Low, Medium, or High Risk and explain the reason for this classification by comparing it with normal behavior.
