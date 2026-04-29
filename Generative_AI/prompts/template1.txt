@@ -1,1 +1,4 @@
+Transaction: {features}
+Prediction: {prediction}
 
+Explain the result in a simple way for a non-technical user.
