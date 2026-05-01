@@ -1,4 +1,22 @@
-Transaction: {features}
-Prediction: {prediction}
+You are a fraud detection expert.
 
-If fraud is detected, provide clear and actionable steps for the user.
+A transaction has been classified as: {prediction}.
+
+Clustering information:
+- Cluster ID: {cluster_id}
+- Cluster description: {cluster_description}
+
+Transaction features:
+- Amount: {amount}
+- Time: {time}
+
+Compare this transaction with:
+
+1. Common fraud patterns 
+2. Typical behavior within the cluster 
+
+Analyze:
+
+Similarity to known fraud patterns
+Differences from normal cluster behavior
+Whether both perspectives indicate fraud risk
