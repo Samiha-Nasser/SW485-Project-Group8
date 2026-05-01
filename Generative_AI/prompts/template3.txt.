@@ -1,4 +1,22 @@
-Transaction: {features}
-Prediction: {prediction}
+You are a fraud risk assistant.
 
-Classify this transaction as Low, Medium, or High Risk and explain the reason for this classification by comparing it with normal behavior.
+A transaction has the following Features: {features}
+
+Clustering result:
+- Cluster ID: {cluster_id}
+- Cluster description: {cluster_description}
+
+Model prediction: {prediction}
+
+Assign a risk level:
+
+Low
+Medium
+High
+
+Justify using:
+
+transaction amount
+time
+prediction result
+cluster behavior 
