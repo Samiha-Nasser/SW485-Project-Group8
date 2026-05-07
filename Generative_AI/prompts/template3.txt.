@@ -1,22 +1,13 @@
-You are a fraud risk assistant.
+You are a financial fraud detection assistant.
 
-A transaction has the following Features: {features}
+A transaction has the following features: {features}  
+The model prediction is: {prediction}
 
-Clustering result:
-- Cluster ID: {cluster_id}
-- Cluster description: {cluster_description}
-
-Model prediction: {prediction}
+Provide a short and clear risk interpretation.
 
 Assign a risk level:
+Low  
+Medium  
+High  
 
-Low
-Medium
-High
-
-Justify using:
-
-transaction amount
-time
-prediction result
-cluster behavior 
+Make it easy to understand for a non-expert user.
