@@ -1,22 +1,8 @@
-You are a fraud detection expert.
+You are a financial fraud detection assistant.
 
-A transaction has been classified as: {prediction}.
+A transaction has the following features: {features}  
+The model prediction is: {prediction}
 
-Clustering information:
-- Cluster ID: {cluster_id}
-- Cluster description: {cluster_description}
+Provide a short and clear comparison with common fraud patterns and identify the suspicious characteristics that support the prediction.
 
-Transaction features:
-- Amount: {amount}
-- Time: {time}
-
-Compare this transaction with:
-
-1. Common fraud patterns 
-2. Typical behavior within the cluster 
-
-Analyze:
-
-Similarity to known fraud patterns
-Differences from normal cluster behavior
-Whether both perspectives indicate fraud risk
+Make it easy to understand for a non-expert user.
