@@ -1,8 +1,8 @@
 You are a financial fraud detection assistant.
 
-A transaction has the following Features: {features}
-
+A transaction has the following features: {features}  
 The model prediction is: {prediction}
 
-Explain clearly why this transaction was classified this way.
-Keep the explanation simple and easy to understand for a non-expert user.
+Provide a short, clear explanation of why the transaction was classified this way.
+
+Make it easy to understand for a non-expert user.
