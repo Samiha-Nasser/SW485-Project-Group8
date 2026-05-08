@@ -1,5 +1,4 @@
 # Generative AI Prompt Design Rationale
-**SWE485 - Machine Learning Project**
 
 This document outlines the systematic design, evaluation, and integration plan for the Generative AI component of our fraud detection system. 
 
