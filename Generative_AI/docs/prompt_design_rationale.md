@@ -16,3 +16,10 @@ The design of these templates is grounded in established principles in modern fr
 Furthermore, prior research shows that fraud typically manifests through anomalous behavioral patterns that deviate from normal user behavior. This supports the inclusion of both explanation-based and pattern-comparison templates, allowing each transaction to be analyzed within its behavioral context rather than relying solely on a final classification output.
 
 Building on this, the template design supports multiple levels of decision-making. This includes a Fraud Risk Scoring Template that provides a graded representation of risk (Low, Medium, High) instead of a binary decision, aligning with real-world risk management practices in financial systems. In addition, the User Advice Template translates analytical outputs into actionable recommendations such as requesting additional verification or escalating cases for human review. This ensures that the system output is not limited to prediction and explanation, but is also operationally useful in practical fraud detection workflows.
+
+
+
+
+References to prompt engineering best practices
+
+The prompt templates in this work were designed based on several best practices in Prompt Engineering that were studied. First, clarity and specificity were applied by defining the model as a financial fraud detection assistant, which helps constrain the context and improve response accuracy. Second, clear and structured information was provided to the model, such as transaction features and prediction results, which helps it better understand the task and generate more accurate and relevant outputs. In addition, a controlled output format was enforced, such as defining risk levels (Low, Medium, High) or requiring short and clear responses, which makes the results more suitable for use in decision-making systems.
