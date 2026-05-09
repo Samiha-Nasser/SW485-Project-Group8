@@ -1,3 +1,5 @@
+The following section explains the design rationale and thought process behind each prompt template, along with how domain knowledge and prompt engineering principles influenced their development. It also summarizes key insights obtained during testing and evaluation.
+
 The Thought Process Behind Each Template
 
 The Fraud Explanation Template (T1) was designed to transform the output of fraud detection models from a binary classification (Fraud / Not Fraud) into a human-understandable explanation. The design focuses on enhancing interpretability by linking the model’s prediction to transaction features, allowing the decision to be expressed in a clear and understandable textual form. This ensures that model outputs are not presented as opaque results, but rather as meaningful explanations grounded in observable transaction characteristics.
