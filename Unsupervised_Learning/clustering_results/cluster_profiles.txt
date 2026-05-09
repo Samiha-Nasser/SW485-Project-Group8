@@ -1,0 +1,214 @@
+================================================================
+CLUSTER PROFILES — CREDIT CARD FRAUD DETECTION
+Phase 2: Unsupervised Learning
+SWE485 | King Saud University | 2nd Semester 1447
+================================================================
+
+Overall Dataset Statistics
+──────────────────────────────────────────────────────────────
+Total Transactions : 283,726
+Total Fraud Cases  : 473
+Overall Fraud Rate : 0.1667%
+Features Used      : 29 (V1–V28 + Amount)
+Scaling            : RobustScaler (median/IQR — robust to fraud outliers)
+Sampling           : NONE — full dataset used
+
+================================================================
+ALGORITHM 1: K-MEANS (k=2)
+================================================================
+
+Configuration
+─────────────
+  Algorithm      : Lloyd's Algorithm
+  k              : 2 (selected via Elbow Method + Silhouette + Davies-Bouldin)
+  n_init         : 10
+  Silhouette Score    : 0.6847  (excellent geometric separation)
+  Davies-Bouldin Index: 1.0216  (compact, well-separated clusters)
+  Adj. Rand Index     : (post-hoc external validation only)
+
+──────────────────────────────────────────────────────────────
+Cluster 0 — Dominant Legitimate Baseline
+──────────────────────────────────────────────────────────────
+  Size                    : 278,492  (98.2% of total)
+  Fraud Count             : 455
+  Fraud Rate              : 0.1634%
+  Fraud Enrichment        : 0.98×  (below dataset average → LOW RISK)
+  Avg Transaction Amount  : -$0.10
+  Median Transaction Amount: -$0.27
+  Diff from Overall Avg   : below average
+  Notable Features        : Small deviations in V2, V5, V1
+
+  Interpretation:
+  Cluster 0 represents the dominant behavioral baseline of the dataset.
+  Nearly all transactions fall here, exhibiting routine spending patterns
+  and a fraud rate slightly below the dataset average. This cluster
+  serves as the reference group for normal transaction activity.
+
+  System Implication:
+  Transactions in Cluster 0 use the standard XGBoost decision threshold
+  from Phase 1 (0.30), preserving precision while minimizing false positives.
+
+──────────────────────────────────────────────────────────────
+Cluster 1 — Atypical / Higher-Risk Group
+──────────────────────────────────────────────────────────────
+  Size                    : 5,234   (1.8% of total)
+  Fraud Count             : 18
+  Fraud Rate              : 0.3439%
+  Fraud Enrichment        : 2.06×  (above dataset average → MEDIUM RISK)
+  Avg Transaction Amount  : $5.17
+  Median Transaction Amount: $3.92
+  Diff from Overall Avg   : above average
+  Notable Features        : Strong deviations in Amount and V7
+
+  Interpretation:
+  Cluster 1 captures structurally unusual transactions — small in number
+  but with measurably elevated fraud concentration. Despite K-Means having
+  no access to fraud labels during training, it identified a group with
+  2.06× the average fraud rate. Higher transaction amounts in this cluster
+  align with known fraud behavioral patterns.
+
+  System Implication:
+  Transactions in Cluster 1 trigger a lowered XGBoost decision threshold
+  (0.24 instead of 0.30), increasing sensitivity to fraud in this
+  structurally atypical region.
+
+================================================================
+ALGORITHM 2: GAUSSIAN MIXTURE MODEL — GMM (n_components=8)
+================================================================
+
+Configuration
+─────────────
+  Covariance Type    : full (each component has its own covariance matrix)
+  n_components       : 8  (selected via BIC minimization)
+  BIC                : -16,358,536.61
+  Converged          : Yes
+  Silhouette Score   : -0.0057  (expected for overlapping probabilistic model)
+  Davies-Bouldin     : 5.2976
+  Adj. Rand Index    : (post-hoc external validation only)
+
+  Note on Silhouette Score:
+  GMM's negative Silhouette Score reflects that its 8 fine-grained
+  components overlap in PCA projection space. This is appropriate for
+  a probabilistic model designed to capture genuine distributional
+  complexity — not geometric separation. K-Means and GMM are evaluated
+  by different criteria and are not directly comparable on this metric.
+
+GMM Component Summary (Sorted by Fraud Risk)
+──────────────────────────────────────────────────────────────
+  Component | Role                      | Size    | Size% | Fraud | Rate%  | Enrichment | Mix.Wt | Mean P
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────
+  0         | Highest-Risk Signature    | 4,454   | 1.57% | 385   | 8.6439 | 51.8×      | 0.0156 | 0.9909
+  3         | Mildly Atypical Group     | 3,292   | 1.16% | 4     | 0.1215 | 0.73×      | 0.0117 | 0.9854
+  2         | Secondary Legitimate Core | 50,062  | 17.64%| 40    | 0.0799 | 0.48×      | 0.1764 | 1.0000
+  5         | Low-Risk Cluster          | 17,657  | 6.22% | 10    | 0.0566 | 0.34×      | 0.0623 | 0.9826
+  4         | Low-Risk Cluster          | 18,235  | 6.43% | 8     | 0.0439 | 0.26×      | 0.0643 | 0.9826
+  6         | Secondary Legitimate Core | 49,938  | 17.60%| 13    | 0.0260 | 0.16×      | 0.1759 | 0.9994
+  1         | Secondary Legitimate Core | 57,701  | 20.34%| 8     | 0.0139 | 0.08×      | 0.2033 | 0.9921
+  7         | Dominant Legitimate Base  | 82,387  | 29.04%| 5     | 0.0061 | 0.04×      | 0.2904 | 1.0000
+
+──────────────────────────────────────────────────────────────
+Component 0 — Highest-Risk Signature
+──────────────────────────────────────────────────────────────
+  Size                    : 4,454   (1.57% of total)
+  Fraud Count             : 385     (81.4% of ALL fraud in the dataset)
+  Fraud Rate              : 8.6439%
+  Fraud Enrichment        : 51.8×   (far above dataset average → CRITICAL RISK)
+  Mixing Weight           : 0.0156
+  Mean P(component)       : 0.9909  (very high confidence assignments)
+  Mean GMM_FraudProba
+    → Fraud transactions  : 0.8131
+    → Legitimate transact.: 0.0144
+
+  Interpretation:
+  Component 0 is the most fraud-concentrated region discovered by the GMM.
+  Despite representing only 1.57% of all transactions, it captures 81.4%
+  of all fraud cases — a 51.8× enrichment over the dataset average.
+  The mean posterior probability of 0.9909 confirms that assignments to
+  this component are highly confident with minimal overlap.
+  The GMM_FraudProba separation (0.8131 vs 0.0144) demonstrates that
+  this score is highly discriminative between fraud and legitimate behavior.
+
+  System Implication:
+  Component 0 functions as a near-dedicated fraud signature. Transactions
+  assigned here with high GMM_FraudProba receive immediate high-priority
+  review in the fraud detection pipeline.
+
+──────────────────────────────────────────────────────────────
+Component 7 — Dominant Legitimate Baseline
+──────────────────────────────────────────────────────────────
+  Size                    : 82,387  (29.04% of total)
+  Fraud Count             : 5
+  Fraud Rate              : 0.0061%
+  Fraud Enrichment        : 0.04×   (far below dataset average → VERY LOW RISK)
+  Mixing Weight           : 0.2904
+  Mean P(component)       : 1.0000  (perfect assignment confidence)
+
+  Interpretation:
+  Component 7 is the largest component and represents the most behaviorally
+  stable and consistent legitimate transaction group. With only 5 fraud
+  cases and a fraud rate of 0.0061%, it captures the safest and most
+  routine region of the transaction distribution.
+
+──────────────────────────────────────────────────────────────
+Components 1, 2, 6 — Secondary Legitimate Cores
+──────────────────────────────────────────────────────────────
+  Fraud rates range : 0.0139% to 0.0799%  (all below dataset average)
+  Mean P(component) : 0.9921 to 1.0000    (high confidence assignments)
+
+  Interpretation:
+  These three components reveal that legitimate transaction behavior is
+  not homogeneous. GMM successfully separates multiple stable sub-patterns
+  within the legitimate transaction space — a structural insight that
+  K-Means (k=2) collapses into a single cluster.
+
+──────────────────────────────────────────────────────────────
+Components 4, 5 — Low-Risk Clusters
+──────────────────────────────────────────────────────────────
+  Fraud rates       : 0.0439% and 0.0566%  (below dataset average)
+  Mean P(component) : 0.9826               (high confidence assignments)
+
+  Interpretation:
+  Low-risk behavioral sub-patterns with below-average fraud concentration.
+  Together with the Secondary Legitimate Cores, they form the normal
+  behavioral diversity that GMM captures beyond K-Means's single baseline.
+
+──────────────────────────────────────────────────────────────
+Component 3 — Mildly Atypical Group
+──────────────────────────────────────────────────────────────
+  Size                    : 3,292   (1.16% of total)
+  Fraud Count             : 4
+  Fraud Rate              : 0.1215%
+  Fraud Enrichment        : 0.73×   (slightly below average → LOW-MEDIUM RISK)
+  Mixing Weight           : 0.0117
+  Mean P(component)       : 0.9854
+
+  Interpretation:
+  Component 3 represents transactions with mild structural differences
+  from the dominant legitimate patterns, but without forming a strongly
+  fraud-focused region. It sits between the legitimate cores and the
+  high-risk Component 0 in behavioral space.
+
+================================================================
+COMPARISON: K-MEANS vs GMM
+================================================================
+
+  Aspect                    | K-Means (k=2)              | GMM (n=8)
+  ──────────────────────────────────────────────────────────────────────
+  Optimal config            | k=2 (Elbow+Silhouette+DB)  | n=8 (BIC)
+  Assignment type           | Hard (binary label)         | Soft (probability)
+  Silhouette Score          | 0.6847 (excellent)          | -0.0057 (overlapping)
+  Davies-Bouldin            | 1.0216 (compact)            | 5.2976
+  Top group fraud rate      | 0.3439% (2.06×)             | 8.6439% (51.8×)
+  Fraud cases in top group  | 18 / 473  (3.8%)            | 385 / 473 (81.4%)
+  Uncertainty representation| None                        | Explicit (0–1 score)
+  Legitimate diversity      | 1 cluster                   | 7 distinct sub-patterns
+  Key integration output    | Cluster label → threshold   | GMM_FraudProba → XGBoost
+
+  Conclusion:
+  K-Means and GMM are complementary algorithms. K-Means provides the
+  clean structural baseline and dynamic threshold logic. GMM provides
+  the probabilistic depth, the granular fraud signature (Component 0),
+  and the continuous GMM_FraudProba score that together power the
+  integration strategies in Section 7.
+
+================================================================
