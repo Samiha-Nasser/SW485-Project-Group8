@@ -33,7 +33,7 @@
 
 **Tasks**
 - Complete clustering analysis and evaluation.
-- Finalize Phase3_Unsupervised_Learning.ipynb.
+- Finalize Phase2_Unsupervised_Learning.ipynb.
 
 ---
 
